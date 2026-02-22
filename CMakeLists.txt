@@ -20,9 +20,9 @@ FetchContent_MakeAvailable(benchmark)
 add_library(sorters
         Sorters/BubbleSort.c
         Sorters/QuickSort.c
-        Sorters/MergeSort.cpp
-        Sorters/RadixSort.cpp
-        Sorters/BitonicSort.cpp
+        Sorters/MergeSort.c
+        Sorters/RadixSort.c
+        Sorters/BitonicSort.c
 )
 
 target_include_directories(sorters PUBLIC
