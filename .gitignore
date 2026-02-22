@@ -1,0 +1,10 @@
+# CMake
+cmake-build-debug/
+cmake-build-release/
+build/
+
+# CLion
+.idea/
+
+# CMake deps
+_deps/

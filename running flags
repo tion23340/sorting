@@ -1,0 +1,38 @@
+# run everything
+./RUNNING.SH
+
+# by algorithm
+./RUNNING.SH QuickSort
+./RUNNING.SH BubbleSort
+./RUNNING.SH MergeSort
+./RUNNING.SH RadixSort
+./RUNNING.SH BitonicSort
+./RUNNING.SH QuickSortParallel
+
+# by type
+./RUNNING.SH IntSigned
+./RUNNING.SH IntUnsigned
+./RUNNING.SH FloatSigned
+./RUNNING.SH FloatUnsigned
+./RUNNING.SH DoubleSigned
+./RUNNING.SH DoubleUnsigned
+
+# by data category
+./RUNNING.SH Signed      # all signed (int, float, double)
+./RUNNING.SH Unsigned    # all unsigned
+./RUNNING.SH Int         # all int benchmarks
+./RUNNING.SH Float       # all float benchmarks
+./RUNNING.SH Double      # all double benchmarks
+
+# specific benchmark
+./RUNNING.SH QuickSort_IntSigned
+./RUNNING.SH MergeSort_DoubleSigned
+
+# multiple algorithms
+./RUNNING.SH "QuickSort|MergeSort"
+./RUNNING.SH "RadixSort|BitonicSort"
+
+# algorithm + type combo
+./RUNNING.SH "QuickSort.*IntSigned"
+./RUNNING.SH "MergeSort.*Double"
+./RUNNING.SH ".*Parallel.*Signed"
