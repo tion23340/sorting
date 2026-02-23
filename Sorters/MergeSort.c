@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 
 /*
@@ -87,14 +86,4 @@ int compare_int_asc(const void* a, const void* b) {
 
 void merge_sort(void* arr, size_t len, size_t size, cmp_func compar) {
     sort(arr, 0, len, compar, size);
-}
-
-
-int main(){
-    int a[10] = {10, 9, 8, 7, 6, 5, 4, 3,  2, 1};
-    merge_sort(a, 10, sizeof *a, compare_int_asc);
-
-    for(int i = 0 ; i < 10 ; ++i) printf("%d ", *(a + i));
-
-    return 0;
 }
