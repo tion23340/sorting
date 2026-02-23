@@ -74,7 +74,7 @@ static void BM_Sort_Advanced(
     fill_generator(source.data(), N);
 
     std::vector<char> working_copy;
-    working_copy.reserve(total_bytes);
+    working_copy.reserve(N * element_size);
 
     state.SetLabel(name);
 
