@@ -72,12 +72,18 @@ static void BM_Sort_Advanced(
 
     std::vector<char> source(N * element_size);
     fill_generator(source.data(), N);
+
+    std::vector<char> working_copy;
+    working_copy.reserve(total_bytes);
+
     state.SetLabel(name);
 
     for (auto _ : state) {
         state.PauseTiming();
-        current_allocated = peak_allocated = 0;
-        std::vector<char> working_copy = source;
+        current_allocated = total_allocated =  peak_allocated = 0;
+
+        working_copy.assign(source.begin(), source.end());
+
         state.ResumeTiming();
 
         sort_fn(working_copy.data(), N, element_size, comp_fn);
@@ -229,31 +235,31 @@ BENCHMARK_CAPTURE(BM_Sort_Advanced, RadixSort_DoubleUnsigned,
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_IntSigned,
                   bitonic_sort, gen_int_signed, sizeof(int), compare_int_asc,
                   "signed int")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
 
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_IntUnsigned,
                   bitonic_sort, gen_int_unsigned, sizeof(int), compare_int_asc,
                   "unsigned int")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
 
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_FloatSigned,
                   bitonic_sort, gen_float_signed, sizeof(float), compare_float_asc,
                   "signed float")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
 
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_FloatUnsigned,
                   bitonic_sort, gen_float_unsigned, sizeof(float), compare_float_asc,
                   "unsigned float")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
 
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_DoubleSigned,
                   bitonic_sort, gen_double_signed, sizeof(double), compare_double_asc,
                   "signed double")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
 
 BENCHMARK_CAPTURE(BM_Sort_Advanced, BitonicSort_DoubleUnsigned,
                   bitonic_sort, gen_double_unsigned, sizeof(double), compare_double_asc,
                   "unsigned double")
-    ->Args({100})->Args({1000})->Args({10000})->Args({1000000})->Args({10000000});
-
+    ->Args({128})->Args({1024})->Args({16384})->Args({1048576})->Args({16777216});
+    
 BENCHMARK_MAIN();

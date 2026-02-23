@@ -26,7 +26,7 @@
 static void swap(void* a, void* b, size_t size)
 {
     if (a == b) return;
-
+   
     char* tmp = (char*)malloc(size);
     memcpy(tmp, a, size);
     memcpy(a, b, size);
@@ -34,7 +34,8 @@ static void swap(void* a, void* b, size_t size)
     free(tmp);
 }
 
-/* Internal recursive quicksort */
+// Divide and Conquer implementation
+
 static void quick_sort_recursive(char* base, size_t len, size_t size, cmp_func compar)
 {
     if (len < 2)
