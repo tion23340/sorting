@@ -1,27 +1,50 @@
+#include "BaseComparators.h"
+
+extern "C" {
+
+// -----------------------
+// INT
+// -----------------------
 int compare_int_asc(const void* a, const void* b) {
-    return (*(int*)a - *(int*)b);
+    int x = *(const int*)a;
+    int y = *(const int*)b;
+    return (x > y) - (x < y);
 }
 
 int compare_int_desc(const void* a, const void* b) {
-    return (*(int*)b - *(int*)a);
+    int x = *(const int*)a;
+    int y = *(const int*)b;
+    return (y > x) - (y < x);
 }
 
+// -----------------------
+// FLOAT
+// -----------------------
 int compare_float_asc(const void* a, const void* b) {
-    float fa = *(float*)a, fb = *(float*)b;
-    return (fa > fb) - (fa < fb);
+    float x = *(const float*)a;
+    float y = *(const float*)b;
+    return (x > y) - (x < y);
 }
 
 int compare_float_desc(const void* a, const void* b) {
-    float fa = *(float*)a, fb = *(float*)b;
-    return (fb > fa) - (fb < fa);
+    float x = *(const float*)a;
+    float y = *(const float*)b;
+    return (y > x) - (y < x);
 }
 
+// -----------------------
+// DOUBLE
+// -----------------------
 int compare_double_asc(const void* a, const void* b) {
-    double da = *(double*)a, db = *(double*)b;
-    return (da > db) - (da < db);
+    double x = *(const double*)a;
+    double y = *(const double*)b;
+    return (x > y) - (x < y);
 }
 
 int compare_double_desc(const void* a, const void* b) {
-    double da = *(double*)a, db = *(double*)b;
-    return (db > da) - (db < da);
+    double x = *(const double*)a;
+    double y = *(const double*)b;
+    return (y > x) - (y < x);
 }
+
+} // extern "C"
