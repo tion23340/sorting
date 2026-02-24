@@ -1,6 +1,7 @@
 #!/bin/bash
 
 FILTER="${1:-BM_Sort_Advanced}"
+THREADS="${2:-$(nproc)}"
 IMAGE="cpp_benchmark"
 
 if ! docker image inspect $IMAGE &> /dev/null; then
@@ -9,6 +10,10 @@ if ! docker image inspect $IMAGE &> /dev/null; then
 fi
 
 echo "==> Running benchmarks with filter: $FILTER"
-docker run --rm $IMAGE \
+docker run --rm \
+    -e OMP_NUM_THREADS="$THREADS" \
+    -e OMP_PROC_BIND=true \
+    -e OMP_PLACES=cores \
+    $IMAGE \
     --benchmark_filter="$FILTER" \
     --benchmark_counters_tabular=true
