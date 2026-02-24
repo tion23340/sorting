@@ -1,13 +1,13 @@
-FROM alpine:3.19 AS builder
+FROM ubuntu:24.04 AS builder
 
-# install build dependencies
-RUN apk add --no-cache \
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
     cmake \
-    make \
-    g++ \
-    gcc \
+    ninja-build \
+    build-essential \
     git \
-    linux-headers
+    && rm -rf /var/lib/apt/lists/*
 
 # build google benchmark from source
 RUN git clone --branch v1.8.3 --depth 1 https://github.com/google/benchmark.git /benchmark
@@ -25,11 +25,17 @@ RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 RUN cmake --build build -j$(nproc)
 
 # -------------------------------------------------------
-# final image — copy only the binary
+# final image
 # -------------------------------------------------------
-FROM alpine:3.19
+FROM ubuntu:24.04
 
-RUN apk add --no-cache libstdc++
+ENV DEBIAN_FRONTEND=noninteractive
+
+# libgomp1 = OpenMP runtime (libgomp.so)
+RUN apt-get update && apt-get install -y \
+    libstdc++6 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/build/CPP /app/CPP
 
