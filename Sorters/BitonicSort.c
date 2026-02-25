@@ -1,4 +1,5 @@
 #include "Base.h"
+#include "memory_tracker.h"
 
 /**
  * direction:
@@ -16,10 +17,11 @@ void comp_swap(void* arr,
   int comp_res = comparator(elem_i, elem_j);
 
   if ((direction == 1 && comp_res > 0) || (direction == 0 && comp_res < 0)) {
-    char temp[size];
+    void* temp = tracked_malloc(size);
     memcpy(temp, elem_i, size);
     memcpy(elem_i, elem_j, size);
     memcpy(elem_j, temp, size);
+    tracked_free(temp);
   }
 }
 
