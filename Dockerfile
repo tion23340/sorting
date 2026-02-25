@@ -37,6 +37,6 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app/build/CPP /app/CPP
+COPY --from=builder /app/build/benchmark_app /app/benchmark_app
 
-ENTRYPOINT ["/app/CPP"]
+ENTRYPOINT ["/app/benchmark_app"]

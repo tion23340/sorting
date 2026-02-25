@@ -20,7 +20,7 @@ void quick_sort(void* arr, size_t len, size_t size, cmp_func compar);
 void merge_sort(void* arr, size_t len, size_t size, cmp_func compar);
 void radix_sort(void* arr, size_t len, size_t size, cmp_func compar);
 void bitonic_sort(void* arr, size_t len, size_t size, cmp_func compar);
-
+void heap_sort(void* arr, size_t len, size_t size, cmp_func compar);
 #ifdef __cplusplus
 }
 #endif

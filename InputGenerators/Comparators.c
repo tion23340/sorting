@@ -1,10 +1,6 @@
 #include "BaseComparators.h"
 
-extern "C" {
 
-// -----------------------
-// INT
-// -----------------------
 int compare_int_asc(const void* a, const void* b) {
     int x = *(const int*)a;
     int y = *(const int*)b;
@@ -17,9 +13,6 @@ int compare_int_desc(const void* a, const void* b) {
     return (y > x) - (y < x);
 }
 
-// -----------------------
-// FLOAT
-// -----------------------
 int compare_float_asc(const void* a, const void* b) {
     float x = *(const float*)a;
     float y = *(const float*)b;
@@ -32,9 +25,6 @@ int compare_float_desc(const void* a, const void* b) {
     return (y > x) - (y < x);
 }
 
-// -----------------------
-// DOUBLE
-// -----------------------
 int compare_double_asc(const void* a, const void* b) {
     double x = *(const double*)a;
     double y = *(const double*)b;
@@ -46,5 +36,3 @@ int compare_double_desc(const void* a, const void* b) {
     double y = *(const double*)b;
     return (y > x) - (y < x);
 }
-
-} // extern "C"

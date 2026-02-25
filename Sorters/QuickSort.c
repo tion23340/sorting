@@ -1,4 +1,5 @@
 #include "Base.h"
+#include "../MemoryTracker/memory_tracker.h"
 #include <string.h>
 #include <stdint.h>
 #include <stddef.h>

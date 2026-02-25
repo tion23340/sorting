@@ -1,9 +1,11 @@
+#include "Base.h"
+#include "BaseComparators.h"
+
 #include <omp.h>
 #include <string.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "Base.h"
 
 // --------------------------
 // Tuning knobs
@@ -84,32 +86,17 @@ static inline void swap_mem(void* a, void* b, size_t size) {
 // --------------------------
 // Fast comparisons for common types
 // --------------------------
-static inline int cmp_i32(const void* a, const void* b) {
-  int32_t x = *(const int32_t*)a;
-  int32_t y = *(const int32_t*)b;
-  return (x > y) - (x < y);
-}
-static inline int cmp_f32(const void* a, const void* b) {
-  float x = *(const float*)a;
-  float y = *(const float*)b;
-  return (x > y) - (x < y);
-}
-static inline int cmp_f64(const void* a, const void* b) {
-  double x = *(const double*)a;
-  double y = *(const double*)b;
-  return (x > y) - (x < y);
-}
 
 // Return >0 if (ei > ej) under the comparator "kind" semantics.
 // For DESC kinds we negate.
 static inline int cmp_fast(const void* ei, const void* ej, cmp_func cmp, cmp_kind_t kind) {
   switch (kind) {
-    case CMP_I32_ASC:  return cmp_i32(ei, ej);
-    case CMP_I32_DESC: return -cmp_i32(ei, ej);
-    case CMP_F32_ASC:  return cmp_f32(ei, ej);
-    case CMP_F32_DESC: return -cmp_f32(ei, ej);
-    case CMP_F64_ASC:  return cmp_f64(ei, ej);
-    case CMP_F64_DESC: return -cmp_f64(ei, ej);
+    case CMP_I32_ASC:  return compare_int_asc(ei, ej);
+    case CMP_I32_DESC: return compare_int_desc(ei, ej);
+    case CMP_F32_ASC:  return compare_float_asc(ei, ej);
+    case CMP_F32_DESC: return compare_float_desc(ei, ej);
+    case CMP_F64_ASC:  return compare_double_asc(ei, ej);
+    case CMP_F64_DESC: return compare_double_desc(ei, ej);
     default:           return cmp(ei, ej);
   }
 }
@@ -157,15 +144,6 @@ void bitonic_sort(void* arr, size_t len, size_t size, cmp_func compar) {
 
   const cmp_kind_t kind = detect_cmp_kind(compar);
 
-  // Bitonic network:
-  // for k = 2 .. n (doubling)
-  //   for j = k/2 .. 1 (halving)
-  //     for i = 0 .. n-1
-  //       ixj = i ^ j
-  //       if ixj > i: compare-swap based on direction (i & k)
-  //
-  // This structure has synchronization between stages; OpenMP barrier at end of each
-  // parallel-for naturally provides that.
 
   for (size_t k = 2; k <= len; k <<= 1) {
     for (size_t j = k >> 1; j > 0; j >>= 1) {

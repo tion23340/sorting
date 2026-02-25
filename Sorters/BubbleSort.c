@@ -2,33 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Base.h"
-/*
- * @param arr
- *      Pointer to the first element of the array to be sorted.
- *      The array is modified in place.
- *
- * @param len
- *      Number of elements in the array.
- *
- * @param size
- *      Size (in bytes) of each element in the array.
- *
- * @param compar
- *      Pointer to a comparison function.
- *      The function must return:
- *          < 0  if first element is less than second
- *            0  if elements are equal
- *          > 0  if first element is greater than second
- *
- *      Example signature:
- *          int compar(const void* a, const void* b);
-*/
+#include "memory_tracker.h"
+
 void bubble_sort(void *arr, size_t len, size_t size, cmp_func compar) {
     if (len < 2) return;
 
     char *base = (char *)arr;
 
-    void *temp = malloc(size);
+    void *temp = tracked_malloc(size);
     if (!temp) return;
     for (size_t i = 0; i < len - 1; i++) {
         for (size_t j = 0; j < len - i - 1; j++) {
@@ -43,5 +24,5 @@ void bubble_sort(void *arr, size_t len, size_t size, cmp_func compar) {
         }
     }
 
-    free(temp);
+    tracked_free(temp);
 }
