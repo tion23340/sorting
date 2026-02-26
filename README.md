@@ -1,1 +1,1 @@
-# Cel mai frumos(pizdos) proiect(proiect)?(?).(.)
+# Sorting algorithms comparison, perfomance test.
