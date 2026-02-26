@@ -4,7 +4,7 @@ This project benchmarks multiple sorting algorithms across different data types 
 All benchmarks are built and executed inside a Docker container to ensure portability, consistency, and ease of setup.
 
 IMPORTANT: For building the competition sort binary use:
-gcc -O3 -march=native -std=c11 -Wall -Wextra -o final_sort final_sort.c
+`gcc -O3 -march=native -std=c11 -Wall -Wextra -o final_sort final_sort.c`
 
 ---
 
