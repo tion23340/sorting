@@ -51,12 +51,8 @@ static unsigned char* read_all(FILE* f, size_t* out_len) {
 typedef enum { T_INT32, T_FLOAT32, T_FLOAT64 } NumType;
 
 static NumType detect_type(const unsigned char* b) {
-    // If we see '.' or 'e/E' -> floating.
-    // If we see an exponent with many digits or 'E' doesn't matter; we choose:
     //   - default float32 for decimal-only (no e/E)
-    //   - float64 if e/E exists (safer for wide range)
-    //
-    // You can change this policy if your judge specifies the type.
+    //   - float64 if e/E exists
     int saw_dot = 0;
     for (; *b; b++) {
         if (*b == 'e' || *b == 'E') return T_FLOAT64;
@@ -126,7 +122,6 @@ static size_t parse_f64_capped(const unsigned char* buf, size_t cap, double* out
 }
 
 // ===================== radix key transforms =====================
-// NOTE: flip is NOT self-inverse; use unflip to restore.
 
 static inline uint32_t flip_f32(uint32_t x) {
     return (x & 0x80000000u) ? ~x : (x ^ 0x80000000u);
@@ -345,7 +340,7 @@ int main(int argc, char** argv) {
         if (will_output) for (size_t i = 0; i < n; i++) write_f32(out, a[i]);
         free(a);
 
-    } else { // T_FLOAT64
+    } else {
         double* a = (double*)malloc((size_t)N_EXPECTED * sizeof(double));
         if (!a) { fprintf(stderr, "Allocation failed\n"); exit(1); }
         size_t n = parse_f64_capped(buf, (size_t)N_EXPECTED, a);
