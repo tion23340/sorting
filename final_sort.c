@@ -1,5 +1,5 @@
 // Build:
-//   gcc -O3 -march=native -std=c11 -Wall -Wextra -o sort sort.c
+//   gcc -O3 -march=native -std=c11 -Wall -Wextra -o sort final_sort.c
 #define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>
